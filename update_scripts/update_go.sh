@@ -69,7 +69,7 @@ echo "removing ${dir}"
 rm -rf ${dir}
 
 # Set GOPATH on startup (must happen before PATH, as PATH includes it)
-echo "Setting GOPATH in /etc/profile and ${HOME}/.bashrc"
+echo "Maybe setting GOPATH in /etc/profile and ${HOME}/.bashrc"
 cmd='export GOPATH="${HOME}/go"'
 grep --fixed-strings -q "${cmd}" /etc/profile && {
   echo '/etc/profile GOPATH export is unchanged'
@@ -86,7 +86,7 @@ grep --fixed-strings -q "${cmd}" "${HOME}/.bashrc" && {
 }
 
 # Set PATH on startup (GOPATH must be set)
-echo 'Updating /etc/profile and ${HOME}/.bashrc to point to new go binary and ${GOPATH}/bin'
+echo 'Maybe updating /etc/profile and ${HOME}/.bashrc to point to new go binary and ${GOPATH}/bin'
 cmd='export PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"'
 grep --fixed-strings -q "${cmd}" /etc/profile && {
   echo '/etc/profile PATH export is unchanged'
