@@ -2,7 +2,6 @@
 
 apt_packages=(
   vim
-  direnv
   unzip
   git
   make
