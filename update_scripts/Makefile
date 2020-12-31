@@ -40,6 +40,9 @@ update_ycm:
 update_direnv:
 	./update_direnv.sh
 
+update_git_config:
+	./update_git_config.sh
+
 setup_workstation: \
   update_pkgs \
   update_aws_iam_authenticator \
@@ -52,7 +55,12 @@ setup_workstation: \
   update_kustomize \
   update_minikube \
   update_ycm \
-  update_direnv
+  update_direnv \
+  update_git_config
+	echo -e "Setup finished."
+	echo -e "Edit '$${HOME}/.gitconfig' to use 'vimdiff' instead of 'meld' for diffs"
+	echo -e "Run:\n  sudo shutdown -r now\nto start docker daemon"
+	echo -e "When you return, run:\n  gcloud components update\nfor the latest gcloud"
 
 .PHONY: \
   setup_workstation \
