@@ -37,6 +37,9 @@ update_minikube:
 update_ycm:
 	./update_ycm.sh
 
+update_direnv:
+	./update_direnv.sh
+
 setup_workstation: \
   update_pkgs \
   update_aws_iam_authenticator \
@@ -48,7 +51,8 @@ setup_workstation: \
   update_kubectl \
   update_kustomize \
   update_minikube \
-  update_ycm
+  update_ycm \
+  update_direnv
 
 .PHONY: \
   setup_workstation \
@@ -65,3 +69,4 @@ setup_workstation: \
   update_master \
   update_minikube \
   update_ycm \
+  update_direnv
