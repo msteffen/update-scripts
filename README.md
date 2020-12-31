@@ -22,3 +22,4 @@ e.g. by creating the `docker` group and adding the current user to it.
   - [ ] Fix `update_direnv.sh`
 - [ ] Factor out "fetch the latest release of `user/repo` from GitHub"
   - [ ] Fix `go_get_*`
+  - [ ] Fix `update_minikube.sh` (though maybe not needed--`latest` seems to work? Release doesn't come from GitHub)
