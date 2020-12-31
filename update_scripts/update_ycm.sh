@@ -15,4 +15,5 @@ must_have_pkg cmake
 must_have_pkg python-dev
 must_have_pkg python3-dev
 cd ~/.vim/bundle/YouCompleteMe || { echo "Could not find ~/.vim/bundle/YouCompleteMe"; exit 1; }
+# You can run ./install.py --clang-completer if you want C/C++ completion
 ./install.py
