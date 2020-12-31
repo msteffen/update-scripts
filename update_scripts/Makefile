@@ -43,6 +43,9 @@ update_direnv:
 update_git_config:
 	./update_git_config.sh
 
+install_docker:
+	./install_docker.sh
+
 setup_workstation: \
   update_pkgs \
   update_aws_iam_authenticator \
@@ -56,7 +59,8 @@ setup_workstation: \
   update_minikube \
   update_ycm \
   update_direnv \
-  update_git_config
+  update_git_config \
+  install_docker
 	echo -e "Setup finished."
 	echo -e "Run:\n  cd $${HOME}/.vim/bundle/YouCompleteMe && ./install.py --clang-completer\nfor C/C++ completion in vim"
 	echo -e "Edit '$${HOME}/.gitconfig' to use 'vimdiff' instead of 'meld' for diffs"
