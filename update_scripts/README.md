@@ -18,7 +18,7 @@ e.g. by creating the `docker` group and adding the current user to it.
 ### Todos:
 
 - [ ] Factor out "add this code to `bashrc` if it's not in there already". Currently this is accomplished via grep, but I could probably use edit distance to find near matches and print a warning, or at least reduce the current repetitiveness.
-  - [ ] Fix `update_go.sh`
+  - [x] Fix `update_go.sh`
   - [ ] Fix `update_direnv.sh`
 - [ ] Factor out "fetch the latest release of `user/repo` from GitHub"
   - [ ] Fix `go_get_*`
