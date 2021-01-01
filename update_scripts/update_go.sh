@@ -48,7 +48,7 @@ case "$(uname -m)" in
     exit 1
 esac
 
-echo "Downloading go ${VERSION}"
+echo "Beginning installation of Go ${VERSION}"
 
 if [[ -d /usr/local/go ]]; then
   echo "existing go installation found. Backing it up"
