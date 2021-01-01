@@ -2,14 +2,15 @@
 
 set -ex
 
-# Lookup latest version here: https://cloud.google.com/sdk/docs/#linux
-GCLOUD_VERSION=224.0.0
+sudo -n apt-get install apt-transport-https ca-certificates gnupg
 
-echo "Making backup"
-mv "${HOME}/.local/bin/google-cloud-sdk" "${HOME}/.local/bin/google-cloud-sdk.backup" || true
+# Add gcloud PPK to apt sources
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" \
+  | sudo -n tee /etc/apt/sources.list.d/google-cloud-sdk.list
 
-curl -Lo - "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${GCLOUD_VERSION}-linux-x86_64.tar.gz" \
-  | tar -C "${HOME}/.local/bin" -xzf -
+# Download Google cloud public key
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg \
+  | sudo -n apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
 
-exec "${HOME}/.local/bin/google-cloud-sdk/install.sh"
-rm -rf "${HOME}/.local/bin/google-cloud-sdk.backup"
+# Install google cloud SDK
+sudo apt-get update && sudo apt-get install google-cloud-sdk

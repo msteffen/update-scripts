@@ -64,6 +64,7 @@ setup_workstation: \
 	echo -e "Setup finished."
 	echo -e "Run:\n  cd $${HOME}/.vim/bundle/YouCompleteMe && ./install.py --clang-completer\nfor C/C++ completion in vim"
 	echo -e "Edit '$${HOME}/.gitconfig' to use 'vimdiff' instead of 'meld' for diffs"
+	echo -e "Run:\n  gcloud init\nto finish setting up gcloud utilities"
 	echo -e "Run:\n  sudo shutdown -r now\nto start docker daemon"
 	echo -e "When you return, run:\n  gcloud components update\nfor the latest gcloud"
 
