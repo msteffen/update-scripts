@@ -1,9 +1,13 @@
 #!/bin/bash
 
+source_dir="$(dirname "${0}")"
+source "${source_dir}/add_to_file.sh"
+
 set -e
 
 # Determine the most recent release of Go
-echo "Downloading golang.org/dl"
+sudo -n echo "Downloading golang.org/dl"
+
 LATEST_VERSION="$(
 # Note: prefer 'sed -n 1p' over 'head -n 1' because sed reads its entire input
 # before closing its input pipe, avoiding the curl error:
@@ -52,7 +56,7 @@ if [[ -d /usr/local/go ]]; then
     echo "...doing so will overwrite the old backup at /usr/local/go.old"
     sudo -n rm -r /usr/local/go.old
   fi
-  sudo mv /usr/local/go /usr/local/go.old
+  sudo -n mv /usr/local/go /usr/local/go.old
 fi
 
 # Download & unpack go binary
@@ -61,7 +65,7 @@ echo "Downloading https://storage.googleapis.com/golang/go${VERSION}.${os}-${arc
 pushd ${dir}
 curl -L -o go${VERSION}.${os}-${arch}.tar.gz https://storage.googleapis.com/golang/go${VERSION}.${os}-${arch}.tar.gz
 echo "Unpacking binary to /usr/local (will create /usr/local/go)"
-sudo tar -C /usr/local -xzf go${VERSION}.${os}-${arch}.tar.gz
+sudo -n tar -C /usr/local -xzf go${VERSION}.${os}-${arch}.tar.gz
 echo "Unpacking finished"\!
 popd
 
@@ -69,38 +73,20 @@ echo "removing ${dir}"
 rm -rf ${dir}
 
 # Set GOPATH on startup (must happen before PATH, as PATH includes it)
-echo "Maybe setting GOPATH in /etc/profile and ${HOME}/.bashrc"
 cmd='export GOPATH="${HOME}/go"'
-grep --fixed-strings -q "${cmd}" /etc/profile && {
-  echo '/etc/profile GOPATH export is unchanged'
-} || {
-  # Use tee rather than bash's >> redirect so writing happens in sudo subshell
-  echo -e "\n${cmd}" | sudo -n tee -a /etc/profile >/dev/null
-  echo "added 'export GOPATH' to /etc/profile"
-}
-grep --fixed-strings -q "${cmd}" "${HOME}/.bashrc" && {
-  echo "${HOME}/.bashrc GOPATH export is unchanged"
-} || {
-  echo -e "\n[[ -n \"\${GOPATH}\" ]] || ${cmd}" >>$HOME/.bashrc
-  echo "added 'export GOPATH' to ${HOME}/.bashrc"
-}
+desc='GOPATH export'
+add_to_file "${cmd}" "${desc}" "/etc/profile" --use-sudo
+
+cmd="[[ -n \"\${GOPATH}\" ]] || ${cmd}"
+add_to_file "${cmd}" "${desc}" "${HOME}/.bashrc"
 
 # Set PATH on startup (GOPATH must be set)
-echo 'Maybe updating /etc/profile and ${HOME}/.bashrc to point to new go binary and ${GOPATH}/bin'
 cmd='export PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"'
-grep --fixed-strings -q "${cmd}" /etc/profile && {
-  echo '/etc/profile PATH export is unchanged'
-} || {
-  echo -e "\n${cmd}" | sudo -n tee -a /etc/profile >/dev/null
-  echo "added 'export PATH' to /etc/profile"
-}
+desc='PATH export'
+add_to_file "${cmd}" "${desc}" "/etc/profile" --use-sudo
 
-grep --fixed-strings -q "${cmd}" "${HOME}/.bashrc" && {
-  echo "${HOME}/.bashrc PATH export is unchanged"
-} || {
-  echo -e "\n[[ \"\${PATH}\" =~ /usr/local/go/bin ]] || ${cmd}" >>"${HOME}/.bashrc"
-  echo "added 'export PATH' to ${HOME}/.bashrc"
-}
+cmd="[[ \"\${PATH}\" =~ /usr/local/go/bin ]] || ${cmd}"
+add_to_file "${cmd}" "${desc}" "${HOME}/.bashrc"
 
 # Delete backed up go installation
 [[ -d /usr/local/go.old ]] && sudo -n rm -r /usr/local/go.old
