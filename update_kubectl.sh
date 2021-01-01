@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source add_to_file.sh
+
 set -ex
 
 if ! sudo -n echo "hi"; then
@@ -30,3 +32,7 @@ curl -L "https://storage.googleapis.com/kubernetes-release/release/${kubectl_ver
            -C /usr/local/bin \
            "kubernetes/client/bin/kubectl"
 sudo chmod +x /usr/local/bin/kubectl
+
+# Install alias
+add_to_file 'alias kc=kubectl' 'kubectl <-> kc alias' "${HOME}/.bashrc"
+
