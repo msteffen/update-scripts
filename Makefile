@@ -40,8 +40,9 @@ update_ycm:
 update_direnv:
 	./update_direnv.sh
 
-update_git_config:
-	./update_git_config.sh
+install_configs:
+	./install_git_config.sh
+	./install_configs.sh
 
 install_docker:
 	./install_docker.sh
