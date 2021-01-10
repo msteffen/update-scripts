@@ -42,6 +42,7 @@ update_direnv:
 
 install_configs:
 	./install_git_config.sh
+	./install_tmux_config.sh
 	./install_configs.sh
 
 install_docker:
