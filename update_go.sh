@@ -1,9 +1,9 @@
 #!/bin/bash
 
+set -e
+
 source_dir="$(dirname "${0}")"
 source "${source_dir}/add_to_file.sh"
-
-set -e
 
 # Determine the most recent release of Go
 sudo -n echo "Downloading golang.org/dl"
@@ -78,7 +78,7 @@ desc='GOPATH export'
 add_to_file "${cmd}" "${desc}" "/etc/profile" --use-sudo
 
 cmd="[[ -n \"\${GOPATH}\" ]] || ${cmd}"
-add_to_file "${cmd}" "${desc}" "${HOME}/.bashrc"
+add_to_file "${cmd}" "${desc}" "${HOME}/.profile"
 
 # Set PATH on startup (GOPATH must be set)
 cmd='export PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"'
@@ -86,7 +86,7 @@ desc='PATH export'
 add_to_file "${cmd}" "${desc}" "/etc/profile" --use-sudo
 
 cmd="[[ \"\${PATH}\" =~ /usr/local/go/bin ]] || ${cmd}"
-add_to_file "${cmd}" "${desc}" "${HOME}/.bashrc"
+add_to_file "${cmd}" "${desc}" "${HOME}/.profile"
 
 # Delete backed up go installation
 [[ -d /usr/local/go.old ]] && sudo -n rm -r /usr/local/go.old
