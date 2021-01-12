@@ -18,7 +18,7 @@ update_go:
 update_goreleaser:
 	./update_goreleaser.sh
 
-update_kfctl:
+update_kfctl: update_pkgs # for jq
 	./update_kfctl.sh
 
 update_etcdctl: setup_dest
