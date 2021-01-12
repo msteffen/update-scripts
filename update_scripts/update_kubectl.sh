@@ -1,38 +1,43 @@
 #!/bin/bash
 
-source add_to_file.sh
+source_dir="$(dirname "${0}")"
+source "${source_dir}/add_to_file.sh"
 
-set -ex
+set -e
 
-if ! sudo -n echo "hi"; then
-  echo "Error: must use sudo non-interactively; please run a sudo command"
-fi
+# Default values
+version="$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)"
+# version=v1.15.5 # latest version that works with kubeflow
+destination="${HOME}/.local/bin"
 
-if [[ -z "$( which jq )" ]]; then
-  echo -e "Error: must install 'jq'. Run:\n  sudo apt install jq"
-  exit 1
-fi
-
-if [[ -n "$(which kubectl)" ]]; then
-  echo "Stashing old kubectl"
-  sudo mv "$(which kubectl)" /tmp/kubectl.backup
-fi
+# Run getopt in definition (rather than inline in 'eval') so that an error
+# (e.g. unrecognized argument) causes the script to exit.
+newargs="$( getopt -l "version:,destination:" "--" "${0}" "${@:-}" )"
+eval "set -- ${newargs}"
+while true; do
+    case "${1}" in
+        --version)
+          version="${2#v}"
+          shift 2
+          ;;
+        --destination)
+          destination="${2}"
+          shift 2
+          ;;
+        --)
+          shift
+          break
+          ;;
+    esac
+done
 
 # Get latest kubectl release
-kubectl_version="$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)"
-# kubectl_version=v1.15.5 # latest version that works with kubeflow
-kubectl_tar=kubernetes-client-linux-amd64.tar.gz
-set +x
-echo "Getting latest kubectl release (${kubectl_version})"
-set -x
-curl -L "https://storage.googleapis.com/kubernetes-release/release/${kubectl_version}/${kubectl_tar}" \
-  | sudo -n tar \
-           -xvzf - \
-           --strip-components=3 \
-           -C /usr/local/bin \
-           "kubernetes/client/bin/kubectl"
-sudo chmod +x /usr/local/bin/kubectl
+kc_tar_file=kubernetes-client-linux-amd64.tar.gz
+echo "Getting latest kubectl release (${version})"
+curl -L "https://storage.googleapis.com/kubernetes-release/release/${version}/${kc_tar_file}" \
+  | tar -xvz --strip-components=3 -C "${destination}" "kubernetes/client/bin/kubectl"
+chmod +x "${destination}/kubectl"
 
 # Install alias
-add_to_file 'alias kc=kubectl' 'kubectl <-> kc alias' "${HOME}/.bashrc"
+add_to_file 'alias kc=kubectl' 'kubectl <-> kc alias' "${HOME}/.bash_aliases"
 
