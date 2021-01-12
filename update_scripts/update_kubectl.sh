@@ -6,7 +6,7 @@ source "${source_dir}/add_to_file.sh"
 set -e
 
 # Default values
-version="$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)"
+version="$(curl -sL https://storage.googleapis.com/kubernetes-release/release/stable.txt)"
 # version=v1.15.5 # latest version that works with kubeflow
 destination="${HOME}/.local/bin"
 
@@ -34,7 +34,7 @@ done
 # Get latest kubectl release
 kc_tar_file=kubernetes-client-linux-amd64.tar.gz
 echo "Getting latest kubectl release (${version})"
-curl -L "https://storage.googleapis.com/kubernetes-release/release/${version}/${kc_tar_file}" \
+curl -sL "https://storage.googleapis.com/kubernetes-release/release/${version}/${kc_tar_file}" \
   | tar -xvz --strip-components=3 -C "${destination}" "kubernetes/client/bin/kubectl"
 chmod +x "${destination}/kubectl"
 
