@@ -11,7 +11,7 @@ source "${source_dir}/add_to_file.sh"
 
 # Default values
 version="$(
-  curl https://api.github.com/repos/kubernetes-sigs/kubebuilder/releases \
+  curl -sL https://api.github.com/repos/kubernetes-sigs/kubebuilder/releases \
     | jq -r '.[].tag_name' \
     | grep -v 'alpha\|beta\|rc' \
     | sort -r --version-sort \

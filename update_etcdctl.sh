@@ -16,7 +16,7 @@ source "${source_dir}/add_to_file.sh"
 
 # Default values
 version="$(
-  curl https://api.github.com/repos/etcd-io/etcd/releases \
+  curl -sL https://api.github.com/repos/etcd-io/etcd/releases \
     | jq -r '.[].tag_name' \
     | grep -v 'alpha\|beta\|rc' \
     | sort -r --version-sort \
@@ -46,6 +46,6 @@ while true; do
     esac
 done
 
-curl -Lo - "https://github.com/etcd-io/etcd/releases/download/v${version}/etcd-v${version}-linux-amd64.tar.gz" \
+curl -sL "https://github.com/etcd-io/etcd/releases/download/v${version}/etcd-v${version}-linux-amd64.tar.gz" \
   | tar -xvz --strip-components=1 -C "${destination}" "etcd-v${version}-linux-amd64/etcdctl"
 chmod +x "${destination}/etcdctl"
