@@ -22,6 +22,6 @@ apt_packages=(
   lsb-core
   uuid
 );
-sudo apt update -y
-sudo apt install -y "${apt_packages[@]}"
-sudo apt upgrade -y
+sudo -n apt update -y
+sudo -n apt install -y "${apt_packages[@]}"
+sudo -n apt upgrade -y
