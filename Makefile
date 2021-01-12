@@ -1,6 +1,11 @@
 update_pkgs:
 	./update_pkgs.sh
 
+setup_dest:
+	if [ \! \( -d "$${HOME}/.local/bin" \) ]; then \
+	  mkdir "$${HOME}/.local/bin"; \
+	fi
+
 update_aws_iam_authenticator:
 	./update_aws_iam_authenticator.sh
 
@@ -15,6 +20,9 @@ update_goreleaser:
 
 update_kfctl:
 	./update_kfctl.sh
+
+update_etcdctl: setup_dest
+	./update_etcdctl.sh
 
 update_kubebuilder:
 	./update_kubebuilder.sh
