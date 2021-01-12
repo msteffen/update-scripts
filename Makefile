@@ -43,9 +43,6 @@ update_minikube: setup_dest update_pkgs
 update_lean:
 	./update_lean.sh
 
-update_master:
-	./update_master.sh
-
 update_ycm:
 	./update_ycm.sh
 
@@ -94,7 +91,6 @@ setup_workstation: \
   update_kubectl \
   update_kustomize \
   update_lean \
-  update_master \
   update_minikube \
   update_ycm \
   update_direnv
