@@ -72,6 +72,7 @@ setup_workstation: \
   update_direnv \
   update_git_config \
   install_docker
+	./setup_pachyderm
 	echo -e "Setup finished."
 	echo -e "Run:\n  cd $${HOME}/.vim/bundle/YouCompleteMe && ./install.py --clang-completer\nfor C/C++ completion in vim"
 	echo -e "Edit '$${HOME}/.gitconfig' to use 'vimdiff' instead of 'meld' for diffs"
