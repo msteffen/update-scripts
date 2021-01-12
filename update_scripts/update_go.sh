@@ -12,7 +12,7 @@ LATEST_VERSION="$(
 # Note: prefer 'sed -n 1p' over 'head -n 1' because sed reads its entire input
 # before closing its input pipe, avoiding the curl error:
 #   "curl: (23) Failed writing body (580 != 1387)"
-curl -L golang.org/dl \
+curl -sL golang.org/dl \
   | grep -E '"/dl/go([0-9]{1,3}\.){2,3}linux-amd64.tar.gz"' \
   | sed -n 1p \
   | sed 's#^.*"/dl/go\(\([0-9]\{1,3\}\.\)\{2,3\}\)linux-amd64.tar.gz".*$#\1#g' \
@@ -63,7 +63,7 @@ fi
 dir=$(mktemp -d /tmp/go_binary.XXXXXXX)
 echo "Downloading https://storage.googleapis.com/golang/go${VERSION}.${os}-${arch}.tar.gz -> ${dir}/go${VERSION}.${os}-${arch}.tar.gz"
 pushd ${dir}
-curl -L -o go${VERSION}.${os}-${arch}.tar.gz https://storage.googleapis.com/golang/go${VERSION}.${os}-${arch}.tar.gz
+curl -sL -o go${VERSION}.${os}-${arch}.tar.gz https://storage.googleapis.com/golang/go${VERSION}.${os}-${arch}.tar.gz
 echo "Unpacking binary to /usr/local (will create /usr/local/go)"
 sudo -n tar -C /usr/local -xzf go${VERSION}.${os}-${arch}.tar.gz
 echo "Unpacking finished"\!
