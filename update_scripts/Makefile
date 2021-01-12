@@ -33,14 +33,14 @@ update_etcdctl: setup_dest update_pkgs
 update_kustomize: setup_dest update_pkgs
 	./update_kustomize.sh
 
+update_minikube: setup_dest update_pkgs
+	./update_minikube.sh
+
 update_lean:
 	./update_lean.sh
 
 update_master:
 	./update_master.sh
-
-update_minikube:
-	./update_minikube.sh
 
 update_ycm:
 	./update_ycm.sh
