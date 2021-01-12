@@ -18,19 +18,19 @@ update_go:
 update_goreleaser:
 	./update_goreleaser.sh
 
-update_kfctl: update_pkgs # for jq
+update_kfctl: setup_dest update_pkgs
 	./update_kfctl.sh
 
-update_etcdctl: setup_dest
-	./update_etcdctl.sh
-
-update_kubebuilder:
+update_kubebuilder: setup_dest update_pkgs
 	./update_kubebuilder.sh
 
-update_kubectl:
+update_kubectl: setup_dest
 	./update_kubectl.sh
 
-update_kustomize:
+update_etcdctl: setup_dest update_pkgs
+	./update_etcdctl.sh
+
+update_kustomize: setup_dest update_pkgs
 	./update_kustomize.sh
 
 update_lean:
