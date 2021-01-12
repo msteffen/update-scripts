@@ -6,7 +6,11 @@ setup_dest:
 	  mkdir "$${HOME}/.local/bin"; \
 	fi
 
-update_aws_iam_authenticator:
+update_awscli: update_pkgs
+	./update_awscli_v1.sh
+	./update_awscli_v2.sh
+
+update_aws_iam_authenticator: update_awscli
 	./update_aws_iam_authenticator.sh
 
 update_gcloud:
