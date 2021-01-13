@@ -40,6 +40,9 @@ update_kustomize: setup_dest update_pkgs
 update_minikube: setup_dest update_pkgs
 	./update_minikube.sh
 
+update_helm: setup_dest update_pkgs
+	./update_helm.sh
+
 update_lean:
 	./update_lean.sh
 
@@ -74,6 +77,7 @@ setup_workstation: \
   update_kubectl \
   update_kustomize \
   update_minikube \
+  update_helm \
   update_ycm \
   update_direnv \
   install_docker
@@ -96,6 +100,7 @@ setup_workstation: \
   update_kubebuilder \
   update_kubectl \
   update_kustomize \
+  update_helm \
   update_lean \
   update_minikube \
   update_ycm \
