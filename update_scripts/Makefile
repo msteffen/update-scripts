@@ -52,12 +52,13 @@ update_direnv:
 install_configs:
 	./install_git_config.sh
 	./install_tmux_config.sh
-	./install_configs.sh
+	./install_screen_config.sh
 
 install_docker:
 	./install_docker.sh
 
 setup_workstation: \
+  install_configs \
   update_pkgs \
   update_aws_iam_authenticator \
   update_gcloud \
@@ -70,7 +71,6 @@ setup_workstation: \
   update_minikube \
   update_ycm \
   update_direnv \
-  update_git_config \
   install_docker
 	./setup_pachyderm
 	echo -e "Setup finished."
