@@ -57,7 +57,12 @@ install_configs:
 install_docker:
 	./install_docker.sh
 
+install_vim:
+	./install_vim.sh
+	@make update_ycm
+
 setup_workstation: \
+  install_vim \
   install_configs \
   update_pkgs \
   update_aws_iam_authenticator \
@@ -94,4 +99,5 @@ setup_workstation: \
   update_lean \
   update_minikube \
   update_ycm \
+  install_vim \
   update_direnv
