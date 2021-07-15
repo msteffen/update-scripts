@@ -2,6 +2,9 @@
 
 set -ex
 
+source_dir="$(dirname "$(readlink -f "${0}")")"
+source "${source_dir}/latest_gh_release.sh"
+
 sudo -n echo starting || { echo -e "need sudo privileges. Run\nsudo echo test"; exit 1; }
 
 if [[ -z "$( which jq )" ]]; then
@@ -11,14 +14,7 @@ fi
 
 if [[ -z "${VERSION}" ]]; then
   # Get latest goreleaser release
-  VERSION="$(
-    curl -s https://api.github.com/repos/goreleaser/goreleaser/releases \
-      | jq -r '.[].name' \
-      | sed 's/^v//' \
-      | grep -Ev 'alpha|beta|rc' \
-      | sort --version-sort \
-      | tail -n 1
-  )"
+  VERSION="$(latest_gh_release "goreleaser/goreleaser")"
 fi
 
 echo "Getting latest goreleaser release (${VERSION})"

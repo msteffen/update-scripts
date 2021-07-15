@@ -2,15 +2,11 @@
 
 set -e
 
+source_dir="$(dirname "$(readlink -f "${0}")")"
+source "${source_dir}/latest_gh_release.sh"
+
 # Default values
-version="$(
-  curl https://api.github.com/repos/kubeflow/kfctl/releases \
-    | jq -r '.[].tag_name' \
-    | grep -v 'alpha\|beta\|rc' \
-    | sort -r --version-sort \
-    | sed -n '1p' \
-    | sed 's/^v//'
-)"
+version="$(latest_gh_release "kubeflow/kfctl")"
 destination="${HOME}/.local/bin"
 
 # Run getopt in definition (rather than inline in 'eval') so that an error
