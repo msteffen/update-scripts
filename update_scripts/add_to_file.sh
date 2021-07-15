@@ -6,7 +6,7 @@ function add_to_file {
   # doesn't work, but
   #   local x; x="$(false)" || return 1
   # does. (also 'eval "x=$(false)"' loses the exit code, but only b/c
-  # 'false' runs before 'eval')
+  # 'false' runs before 'eval', as part of bash string substitution)
   # ---
   local new_args
   new_args="$( set -e; getopt -l 'use-sudo' -- 'add_to_file' "${@}")" \
