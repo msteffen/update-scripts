@@ -39,7 +39,7 @@ echo "Creating /tmp/awscliv2.zip and /tmp/aws"
 echo "You'll need to clean up that file if this script fails"
 
 curl -sLo "/tmp/awscliv2.zip" \
-  "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${version}.zip" 
+  "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${version}.zip"
 cd /tmp
 unzip awscliv2.zip
 
