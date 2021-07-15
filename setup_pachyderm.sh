@@ -5,7 +5,7 @@ source_dir="$(dirname "$(readlink -f "${0}")")"
 source "${source_dir}/add_to_file.sh"
 
 # Install pachyderm + pachctl
-# This isn't always what I want. 
+# This isn't always what I want.
 echo "Do you want to download pachyderm under your go path? (y/N)"
 echo "Path would be: \"${GOPATH}/src/github.com/pachyderm/pachyderm)?\""
 read resp
