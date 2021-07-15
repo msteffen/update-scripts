@@ -7,7 +7,7 @@
 
 set -e
 
-source_dir="$(dirname "${0}")"
+source_dir="$(dirname "$(readlink -f "${0}")")"
 source "${source_dir}/add_to_file.sh"
 
 ####
